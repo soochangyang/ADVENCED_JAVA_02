@@ -9,8 +9,9 @@ public class ServerMain {
         SessionManager sessionManager = new SessionManager();
 
         //CommandManager will Change
-        CommandManagerV1 commandManager = new CommandManagerV1(sessionManager);
-
+        //CommandManagerV1 commandManager = new CommandManagerV1(sessionManager);
+        //CommandManagerV2 commandManager = new CommandManagerV2(sessionManager);
+        CommandManagerV3 commandManager = new CommandManagerV3(sessionManager);
         Server server = new Server(PORT, commandManager, sessionManager);
         server.start();
     }

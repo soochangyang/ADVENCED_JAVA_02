@@ -30,7 +30,7 @@ public class WriteHandler implements Runnable{
             output.writeUTF("/join"+DELIMITER +username);
 
             while(true){
-                String toSend = scanner.next();
+                String toSend = scanner.nextLine();
                 if (toSend.isEmpty()){
                     continue;
                 }
@@ -40,11 +40,11 @@ public class WriteHandler implements Runnable{
                     break;
                 }
 
-                // Commend starts with "/" ;
+                // Command starts with "/" ;
                 if (toSend.startsWith("/")){
                     output.writeUTF(toSend);
                 } else {
-                    output.writeUTF("message" + DELIMITER + toSend);
+                    output.writeUTF("/message" + DELIMITER + toSend);
                 }
             }
         } catch (IOException | NoSuchElementException e){
