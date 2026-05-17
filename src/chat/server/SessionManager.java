@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static util.MyLogger.log;
+
 public class SessionManager {
     private List<Session> sessions = new ArrayList<>();
 
@@ -22,10 +24,13 @@ public class SessionManager {
         sessions.clear();
     }
 
-    public synchronized void sendAll(String message) {
+    public synchronized void sendAll(String message, Session mySession) {
         for (Session session : sessions) {
             try {
-                session.send(message);
+                log("["+session.getUsername()+"] -");
+                if (mySession != session ) {
+                    session.send(message);
+                }
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

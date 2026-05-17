@@ -16,7 +16,7 @@ public class ChangeCommand implements Command {
     @Override
     public void execute(String[] args, Session session) throws IOException {
         String changeName = args[1];
-        sessionManager.sendAll(session.getUsername()+ "님이 " + changeName +" 으로 이름을 변경하였습니다.");
+        sessionManager.sendAll(session.getUsername()+ "님이 " + changeName +" 으로 이름을 변경하였습니다.", session);
         session.setUsername(changeName);
     }
 }

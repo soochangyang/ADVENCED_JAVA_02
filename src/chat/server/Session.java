@@ -44,7 +44,7 @@ public class Session implements Runnable {
             log(e);
         } finally{
             sessionManager.remove(this);
-            sessionManager.sendAll( username + "님이 퇴장 했습니다. ");
+            sessionManager.sendAll( username + "님이 퇴장 했습니다. ", this);
             close();
         }
     }

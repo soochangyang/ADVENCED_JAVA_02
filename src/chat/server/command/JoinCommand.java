@@ -16,6 +16,10 @@ public class JoinCommand implements Command{
     public void execute(String[] args, Session session)  {
         String username = args[1];
         session.setUsername(username);
-        sessionManager.sendAll(username + "님이 입장하였습니다.");
+        //String sessionOwner = session.getUsername();
+
+            sessionManager.sendAll(username + "님이 입장하였습니다.", session);
+
+
     }
 }

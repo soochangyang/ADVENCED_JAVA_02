@@ -19,15 +19,15 @@ public class CommandManagerV2 implements CommandManager{
             String[] split = totalMessage.split(DELIMITER);
             String username = split[1];
             session.setUsername(username);
-            sessionManager.sendAll(username + "님이 입장하였습니다.");
+            sessionManager.sendAll(username + "님이 입장하였습니다.", session);
         } else if (totalMessage.startsWith("/message")){
             String[] split = totalMessage.split(DELIMITER);
             String message = split[1];
-            sessionManager.sendAll("[" + session.getUsername()+ "]" + message);
+            sessionManager.sendAll("[" + session.getUsername()+ "]" + message, session);
         } else if (totalMessage.startsWith("/change")){
             String[] split = totalMessage.split(DELIMITER);
             String changeName = split[1];
-            sessionManager.sendAll(session.getUsername()+ "님이 " + changeName +" 으로 이름을 변경하였습니다.");
+            sessionManager.sendAll(session.getUsername()+ "님이 " + changeName +" 으로 이름을 변경하였습니다.", session);
             session.setUsername(changeName);
         } else if (totalMessage.startsWith("/users")){
             List<String> usernames = sessionManager.getAllUsername();
