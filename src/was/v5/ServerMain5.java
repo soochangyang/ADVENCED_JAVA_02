@@ -16,6 +16,7 @@ public class ServerMain5 {
 
     public static void main(String[] args) throws IOException {
         ServletManager servletManager = new ServletManager();
+
         servletManager.add("/", new HomeServlet());
         servletManager.add("/site1", new Site1Servlet());
         servletManager.add("/site2", new Site2Servlet());
