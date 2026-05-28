@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static util.MyLogger.log;
 
 public class HttpRequest {
     private String method;
@@ -19,7 +20,9 @@ public class HttpRequest {
         parseRequestLine(reader);
         parseHeaders(reader);
         // 메시지 body
+        parseBody(reader);
     }
+
 
     private void parseRequestLine(BufferedReader reader) throws IOException {
         String requestLine = reader.readLine();
@@ -37,13 +40,13 @@ public class HttpRequest {
         path = pathParts[0];
 
         if (pathParts.length != 1) {
-            parsQueryParameters(pathParts[1]);
+            parseQueryParameters(pathParts[1]);
 
         }
 
     }
 
-    private void parsQueryParameters(String queryString) {
+    private void parseQueryParameters(String queryString) {
         for (String param : queryString.split("&")) {
             String[] keyValue = param.split("=");
             String key = URLDecoder.decode(keyValue[0], UTF_8);
@@ -57,6 +60,25 @@ public class HttpRequest {
         while(!(line = reader.readLine()).isEmpty()){
             String[] headerParts = line.split(":");
             headers.put(headerParts[0].trim(), headerParts[1].trim());
+        }
+    }
+    private void parseBody(BufferedReader reader) throws IOException {
+        if (!headers.containsKey("Content-Length")) {
+            return;
+        }
+
+        int contentLength = Integer.parseInt(headers.get("Content-Length"));
+        char[] bodyChars = new char[contentLength];
+        int read = reader.read(bodyChars);
+        if (read != contentLength) {
+            throw new IOException("Invalid request Body: " + new String(bodyChars, 0, read));
+        }
+        String body = new String(bodyChars);
+        log("HTTP Message Body : " + body);
+
+        String contentType = headers.get("Content-Type");
+        if ("application/x-www-form-urlencoded".equals(contentType)) {
+            parseQueryParameters(body);
         }
     }
 
